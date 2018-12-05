@@ -23,7 +23,7 @@
 # SOFTWARE.
 
 APP_NAME='pydeps'
-URL='https://raw.githubusercontent.com/roubles/maclock/pydeps/scripts/pydeps'
+URL='https://raw.github.com/roubles/pydeps/v1.2/scripts/pydeps'
 INSTALL_PATH="/usr/local/bin/$APP_NAME"
 
 function create_usrlocalbin() {
