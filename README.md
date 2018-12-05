@@ -7,13 +7,25 @@ Package multiple python dependencies into one movable tar folder. Ideal for inst
 ```
 pydeps -r requirements.txt -f myfolder
 ```
-This will create myfolder.tar.gz that can be ported to a box without internet access. Once ported, you can untar it, cd into it and run ./installdeps
+This will create myfolder.tar.gz that can be ported to a box without internet access. Once ported, you can untar it, cd into it and run ./installdeps, as follows:
+
+```
+tar zxvf myfolder.tar.gz
+cd myfolder
+./installdeps
+```
 
 ### Create tar from single package
 ```
 pydeps -p requests -f myfolder
 ```
-This will create myfolder.tar.gz that can be ported to a box without internet access. Once ported, you can untar it, cd into it and run ./installdeps
+This will create myfolder.tar.gz that can be ported to a box without internet access. Once ported, you can untar it, cd into it and run ./installdeps, as follows:
+
+```
+tar zxvf myfolder.tar.gz
+cd myfolder
+./installdeps
+```
 
 ## Install
 ```
