@@ -35,8 +35,6 @@ case $key in
         shift # past value
         ;;
     *)
-        echo "wtf $1"
-        echo "wtf $2"
         printusage
         exit 1
         ;;
