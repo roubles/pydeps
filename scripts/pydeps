@@ -86,3 +86,4 @@ EOF
 
 chmod 755 $FOLDER/installdeps
 tar czvf $FOLDER.tar.gz $FOLDER
+rm -rf $FOLDER
