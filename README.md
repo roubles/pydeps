@@ -17,10 +17,10 @@ This will create myfolder.tar.gz that can be ported to a box without internet ac
 
 ## Install
 ```
-curl -sSL https://raw.github.com/roubles/pydeps/v1.4/webinstall.sh | bash
+curl -sSL https://raw.github.com/roubles/pydeps/master/webinstall.sh | bash
 ```
 
 ## Uninstall
 ```
-curl -sSL https://raw.github.com/roubles/pydeps/v1.4/webuninstall.sh | bash
+curl -sSL https://raw.github.com/roubles/pydeps/master/webuninstall.sh | bash
 ```
