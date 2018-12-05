@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+printusage () {
+    echo "Usage: pydeps [-r /path/to/requirements.txt] [-p package-name] -f folder-name"
+    echo ""
+    echo "       -r /path/to/requirements.txt    : Mute the audio"
+    echo "       -p package-name                 : Sleep the display"
+    echo "       -f folder-name                  : Folder name to create"
+    echo "       -h|--help                       : Display this message"
+}
+
+POSITIONAL=()
+while [[ $# -gt 0 ]]
+do
+key="$1"
+
+case $key in
+    --help|-h)
+        printusage
+        exit 1
+        ;;
+    -r|--requirements)
+        REQUIREMENTS="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -p|--package)
+        PACKAGE="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    -f|--folder)
+        FOLDER="$2"
+        shift # past argument
+        shift # past value
+        ;;
+    *)
+        echo "wtf $1"
+        echo "wtf $2"
+        printusage
+        exit 1
+        ;;
+    esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
+
+if [[ -z $REQUIREMENTS ]] && [[ -z $PACKAGE ]]; then
+    echo "You must specify either a requirements.txt or a package." >&2
+    printusage
+    exit 2 
+fi
+
+if [[ -z $FOLDER ]]; then
+    echo "You must specify a folder name." >&2
+    printusage
+    exit 3 
+fi
+
+REQUIREMENTS=$(cd "$(dirname "$REQUIREMENTS")"; pwd -P)/$(basename "$REQUIREMENTS")
+PACKAGE=$PACKAGE
+
+if [ -e $FOLDER ]; then
+    FOLDER=$(cd "$(dirname "$FOLDER")"; pwd -P)/$(basename "$FOLDER")
+    echo "$FOLDER already exists. Please specify a folder name that does not exist." >&2
+    exit 4 
+fi
+
+mkdir $FOLDER
+
+if [[ ! -z $REQUIREMENTS ]]; then
+    if [[ ! -f $REQUIREMENTS ]]; then
+        echo "Requirements file $REQUIREMENTS does not exist. Skipping."
+    else
+        pip download -r $REQUIREMENTS -d "$FOLDER"
+    fi
+fi
+
+if [[ ! -z $PACKAGE ]]; then
+    pip download $PACKAGE -d "$FOLDER"
+fi
+
+cat <<EOF > $FOLDER/installdeps
+#!/usr/bin/env bash
+pip install *.{whl,gz} -f ./ --no-index
+EOF
+
+chmod 755 $FOLDER/installdeps
+tar czvf $FOLDER.tar.gz $FOLDER
